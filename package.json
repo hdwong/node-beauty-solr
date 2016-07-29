@@ -1,0 +1,28 @@
+{
+  "name": "node-beauty-solr",
+  "version": "1.1.0",
+  "description": "Solr module for node-beauty",
+  "private": false,
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hdwong/node-beauty-solr.git"
+  },
+  "dependencies": {
+    "lodash": "*",
+    "solr-client": "*"
+  },
+  "keywords": [
+    "node-beauty",
+    "solr"
+  ],
+  "author": "Bun Wong <bunwong@qq.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hdwong/node-beauty-solr/issues"
+  },
+  "homepage": "https://github.com/hdwong/node-beauty-solr#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
