@@ -9,7 +9,6 @@
     "url": "git+https://github.com/hdwong/node-beauty-solr.git"
   },
   "dependencies": {
-    "lodash": "*",
     "solr-client": "*"
   },
   "keywords": [
