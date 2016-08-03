@@ -27,20 +27,17 @@ let solr = {
     });
   },
   get_document: (req, res, next) => {
-    if (req.query.collection === undefined || req.query.q === undefined) {
+    if (req.query.q === undefined) {
       throw 'Params is wrong';
     }
+    console.log(req.query);
     let start = parseInt(req.query.start || 0, 10),
         rows = parseInt(req.query.rows || 10, 10), solrQuery;
     solrQuery = client.createQuery()
-        .matchFilter('collection', req.query.collection)
         .q(req.query.q)
         .start(start)
         .rows(rows);
-    if (req.query.uid) {
-      solrQuery.matchFilter('uid', req.query.uid);
-    }
-    if (req.query.fq) {
+    if (req.query.fq != '') {
       solrQuery.set('fq=' + req.query.fq);
     }
     client.search(solrQuery, (error, result) => {
@@ -80,7 +77,7 @@ let solr = {
       });
       if (solrQueries.length) {
         core.forEach(solrQueries, (query, next) => {
-          client.deleteByQuery(query, (error, result) => {
+          client.deleteByQuery(query, () => {
             setImmediate(next);
           });
         }, () => {
