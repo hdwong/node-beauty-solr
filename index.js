@@ -37,8 +37,33 @@ let solr = {
         .q(req.query.q)
         .start(start)
         .rows(rows);
-    if (req.query.fq != '') {
-      solrQuery.set('fq=' + req.query.fq);
+    if (req.query.fl !== undefined && req.query.fl != '') {
+      solrQuery.set('fl=' + encodeURIComponent(req.query.fl));
+    }
+    if (req.query.fq !== undefined && req.query.fq != '') {
+      solrQuery.set('fq=' + encodeURIComponent(req.query.fq));
+    }
+    if (req.query.defType !== undefined && req.query.defType != '') {
+      solrQuery.set('defType=' + encodeURIComponent(req.query.defType));
+    }
+    if (req.query.qf !== undefined && req.query.qf != '') {
+      solrQuery.set('qf=' + encodeURIComponent(req.query.qf));
+    }
+    if (req.query.hl !== undefined && req.query.hl != '') {
+      solrQuery.set('hl=true');
+      solrQuery.set('hl.snippets=1');
+      solrQuery.set('hl.fragsize=0');
+      try {
+        let hl = JSON.parse(req.query.hl);
+        solrQuery.set('hl.simple.pre=' + encodeURIComponent(hl.pre || '<em>'));
+        solrQuery.set('hl.simple.post=' + encodeURIComponent(hl.post || '</em>'));
+        if (hl.fl && hl.fl != '') {
+          solrQuery.set('hl.fl=' + encodeURIComponent(hl.fl));
+        }
+      } catch (e) {
+        solrQuery.set('hl.simple.pre', '<em>');
+        solrQuery.set('hl.simple.post', '</em>');
+      }
     }
     client.search(solrQuery, (error, result) => {
       solr.assert(error);
